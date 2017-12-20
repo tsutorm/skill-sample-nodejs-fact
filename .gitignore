@@ -1,2 +1,5 @@
 .DS_Store
 /lambda/custom/node_modules
+/lambda/custom/build/*
+.*
+!.gitkeep
