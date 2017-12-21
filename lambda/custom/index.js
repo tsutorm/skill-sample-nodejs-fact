@@ -15,31 +15,7 @@ var APP_ID = undefined;
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
-    alexa.registerHandlers(handlers);
+    alexa.registerHandlers(require('./intents.js'));
     alexa.resources = require('./resources.js');
     alexa.execute();
-};
-
-var handlers = {
-    'LaunchRequest': function () {
-        this.emit('GetNewFactIntent');
-    },
-    'GetNewFactIntent': function () {
-        var factArr = this.t('FACTS');
-        var factIndex = Math.floor(Math.random() * factArr.length);
-        var randomFact = factArr[factIndex];
-        var speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
-        this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact)
-    },
-    'AMAZON.HelpIntent': function () {
-        var speechOutput = this.t('HELP_MESSAGE');
-        var reprompt = this.t('HELP_REPROMPT');
-        this.emit(':ask', speechOutput, reprompt);
-    },
-    'AMAZON.CancelIntent': function () {
-        this.emit(':tell', this.t('STOP_MESSAGE'));
-    },
-    'AMAZON.StopIntent': function () {
-        this.emit(':tell', this.t('STOP_MESSAGE'));
-    }
 };
